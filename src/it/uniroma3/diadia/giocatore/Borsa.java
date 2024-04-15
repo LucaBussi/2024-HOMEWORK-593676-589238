@@ -35,7 +35,9 @@ public class Borsa {
 
 		return a;
 	}
-	
+	public String getAttrezzi(int i) {
+		return attrezzi[i].toString();
+	}
 	public int getPeso() {
 		int peso = 0;
 		for (int i= 0; i<this.numeroAttrezzi; i++)
