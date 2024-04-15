@@ -119,7 +119,10 @@ public class DiaDia {
 
 	private void posa(String nomeAttrezzo) {
 		if(nomeAttrezzo==null) {
-			this.console.mostraMessaggio("Quale attrezzo vuoi posare?");
+			this.console.mostraMessaggio("Quale attrezzo tra i seguenti vuoi posare?");
+			for(int i=0; i<this.partita.getGiocatore().getBorsa().getNumeroAttrezzi(); i++) {
+				console.mostraMessaggio(this.partita.getGiocatore().getBorsa().getAttrezzi(i));
+			}
 			nomeAttrezzo=this.console.leggiRiga();
 		}
 		if(this.partita.getGiocatore().getBorsa().hasAttrezzo(nomeAttrezzo)) {
