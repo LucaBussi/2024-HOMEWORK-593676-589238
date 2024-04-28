@@ -24,9 +24,11 @@ public class Borsa {
 		this.numeroAttrezzi++;
 		return true;
 	}
+	
 	public int getPesoMax() {
 		return pesoMax;
 	}
+	
 	public Attrezzo getAttrezzo(String nomeAttrezzo) {
 		Attrezzo a = null;
 		for (int i= 0; i<this.numeroAttrezzi; i++)
@@ -35,9 +37,7 @@ public class Borsa {
 
 		return a;
 	}
-	public String getAttrezzi(int i) {
-		return attrezzi[i].toString();
-	}
+	
 	public int getPeso() {
 		int peso = 0;
 		for (int i= 0; i<this.numeroAttrezzi; i++)
@@ -71,6 +71,10 @@ public class Borsa {
 			}
 		}
 		return a;
+	}
+	
+	public String getAttrezzi(int i) {
+		return attrezzi[i].toString();
 	}
 	
 	public String toString() {

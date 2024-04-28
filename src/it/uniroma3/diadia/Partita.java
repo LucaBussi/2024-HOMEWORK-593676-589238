@@ -41,6 +41,10 @@ public class Partita {
 		this.stanzaCorrente=s;
 	}
 	
+	public boolean giocatoreIsVivo() {
+		return this.getGiocatore().getCfu()!=0;
+	}
+	
 	/**
 	 * Restituisce vero se e solo se la partita e' stata vinta
 	 * @return vero se partita vinta
@@ -64,5 +68,4 @@ public class Partita {
 	public void setFinita() {
 		this.finita = true;
 	}
-	
 }
