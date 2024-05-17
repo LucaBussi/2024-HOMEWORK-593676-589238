@@ -20,7 +20,7 @@ public class ComandoPosa implements Comando{
 		if(partita.getGiocatore().getBorsa().hasAttrezzo(nomeAttrezzo)) {
 			Attrezzo a=partita.getGiocatore().getBorsa().removeAttrezzo(nomeAttrezzo);
 			if(partita.getStanzaCorrente().addAttrezzo(a))
-				this.console.mostraMessaggio("Hai posato "+a+" nella stanza "+partita.getStanzaCorrente());
+				this.console.mostraMessaggio("Hai posato "+a+" nella stanza "+partita.getStanzaCorrente().getNome());
 			else
 				this.console.mostraMessaggio("Non c'è abbastanza spazio per posare questo oggetto in questa stanza.");
 		}

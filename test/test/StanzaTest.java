@@ -18,8 +18,8 @@ public class StanzaTest {
 	public void testGetAttrezzo_stanzaNonVuota_Presente() {
 		Stanza stanza=new Stanza("stanza");
 		Attrezzo attrezzo=new Attrezzo("attrezzo", 0);
-		stanza.addAttrezzo(attrezzo);
-		assertNotNull(stanza.getAttrezzo("attrezzo"));
+		assertTrue(stanza.addAttrezzo(attrezzo));
+		assertSame(attrezzo, stanza.getAttrezzo("attrezzo"));
 	}
 	
 	@Test
@@ -42,6 +42,7 @@ public class StanzaTest {
 		Stanza stanzaAdiacente=new Stanza("stanzaAdiacente");
 		stanza.impostaStanzaAdiacente("direzione", stanzaAdiacente);
 		assertEquals(stanzaAdiacente, stanza.getStanzaAdiacente("direzione"));
+		
 	}
 	
 	/*public void testGetStanzaAdiacente_DirezioneErrata() {

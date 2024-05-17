@@ -25,7 +25,7 @@ public class StanzaBloccataTest {
 	
 	@Test
 	public void testGetStanzaAdiacente_Sbloccata() {
-		Attrezzo chiave=new Attrezzo("Passepartout", 0);
+		Attrezzo chiave=new Attrezzo("chiave", 0);
 		stanza.addAttrezzo(chiave);
 		assertNull(stanza.getStanzaAdiacente("sud"));
 	}

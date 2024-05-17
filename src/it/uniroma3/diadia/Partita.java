@@ -18,9 +18,9 @@ public class Partita {
 	private boolean finita;	
 	private Stanza stanzaCorrente;
 	
-	public Partita(){
+	public Partita(Labirinto labirinto){
 		giocatore=new Giocatore();
-		labirinto=new Labirinto();
+		this.labirinto=labirinto;
 		this.finita = false;
 		this.stanzaCorrente=this.labirinto.getStanzaIniziale();
 	}
