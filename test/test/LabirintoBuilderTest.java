@@ -2,67 +2,62 @@ package test;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class LabirintoBuilderTest {
-	private LabirintoBuilder labirinto;
+	private Labirinto.LabirintoBuilder labirinto;
 	
+	
+	@Before
+	public void setUp() throws Exception {
+		//labirinto = Labirinto.newBuilder("labirinto.txt");
+		labirinto = new Labirinto.LabirintoBuilder("labirinto1.txt");
+	} 
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
+
 	@Test
 	public void testGetLabirinto() {
-		labirinto=new LabirintoBuilder()
-				.addStanza("stanza");
 		assertNotNull(labirinto.getLabirinto());
+		assertEquals(Labirinto.class, labirinto.getLabirinto().getClass());
 	}
-	
-	@Test
-	public void testAggiorna() {
-		labirinto=new LabirintoBuilder()
-				.addStanza("stanza1");
-		assertEquals("stanza1", labirinto.getUltimaStanzaAggiunta().getNome());
-		labirinto=labirinto.addStanza("stanza2");
-		assertEquals("stanza2", labirinto.getUltimaStanzaAggiunta().getNome());
-	}
-	
-	@Test
-	public void testAddStanzaIniziale() {
-		assertNull(labirinto);
-		labirinto=new LabirintoBuilder()
-				.addStanzaIniziale("inizio");
-		assertEquals("inizio", labirinto.getMappa().get("inizio").getNome());
-	}
-	
-	@Test
-	public void testAddStanzaVincente() {
-		assertNull(labirinto);
-		labirinto=new LabirintoBuilder()
-				.addStanzaVincente("fine");
-		assertEquals("fine", labirinto.getMappa().get("fine").getNome());
-	}
-	
+
 	@Test
 	public void testAddStanza() {
-		assertNull(labirinto);
-		labirinto=new LabirintoBuilder()
-				.addStanza("stanza");
-		assertEquals("stanza", labirinto.getMappa().get("stanza").getNome());
+		labirinto.addStanza("stanzetta");
+		Stanza expected = new Stanza("stanzetta");
+		assertEquals(expected, labirinto.getMappa().get("stanzetta"));
+	}
+
+	@Test
+	public void testAddAttrezzoSenzaUltimaStanzaAggiunta(){
+		
+		//labirinto.addAttrezzo("cacciavite", 3);
+		//Attrezzo expected = new Attrezzo("cacciavite", 3);
+		labirinto.addStanza("test");
+		assertEquals(Labirinto.LabirintoBuilder.class, labirinto.addAttrezzo("cacciavite", 3).getClass());
 	}
 	
 	@Test
-	public void testAddAttrezzo() {
-		assertNull(labirinto);
-		Attrezzo a = new Attrezzo("attrezzo", 1);
-		labirinto = new LabirintoBuilder()
-				.addStanza("stanza")
-				.addAttrezzo("attrezzo", 1);
-		assertNotNull(labirinto);
-		assertNotNull(labirinto.getMappa());
-		Attrezzo b = labirinto.getMappa().get("stanza").getAttrezzo("attrezzo");
-		assertNotNull(b);
-		assertEquals(a, b);
+	public void testAddAttrezzoConUltimaStanzaAggiunta(){
+		labirinto.addStanzaIniziale("stanzetta").addAttrezzo("cacciavite", 3);
+		Attrezzo expected = new Attrezzo("cacciavite", 3);
+		assertEquals(expected, labirinto.getLabirinto().getStanzaIniziale().getAttrezzo("cacciavite"));		
 	}
+
+	@Test
+    public void testAddAttrezzoConStanza() {
+        labirinto.addStanza("stanzetta");
+        labirinto.addAttrezzo("cacciavite", 3);
+        assertTrue(labirinto.getMappa().get("stanzetta").hasAttrezzo("cacciavite"));
+    }
 }

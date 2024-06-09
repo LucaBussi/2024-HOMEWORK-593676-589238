@@ -117,8 +117,6 @@ public class BorsaTest {
 		Attrezzo a1=new Attrezzo("a1", 2);
 		Attrezzo a2=new Attrezzo("a2", 2);
 		Attrezzo b=new Attrezzo("b", 1);
-		Attrezzo c1=new Attrezzo("c1", 3);
-		
 		assertTrue(this.borsa.addAttrezzo(a1));
 		assertTrue(this.borsa.addAttrezzo(b));
 		assertTrue(this.borsa.addAttrezzo(b));

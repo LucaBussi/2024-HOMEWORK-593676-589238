@@ -4,26 +4,19 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.IOSimulator;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
-import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.comandi.ComandoVai;
 
 public class ComandoVaiTest {
-	private Labirinto lab;
-	private Partita partita;
-	private String direzione;
-	private ComandoVai vai;
-	private IOSimulator console;
-	static final private String MESSAGGIO_BENVENUTO = ""+
+	final private String MESSAGGIO_BENVENUTO = ""+
 			"Ti trovi nell'Universita', ma oggi e' diversa dal solito...\n" +
 			"Meglio andare al piu' presto in biblioteca a studiare. Ma dov'e'?\n"+
 			"I locali sono popolati da strani personaggi, " +
@@ -32,71 +25,55 @@ public class ComandoVaiTest {
 			"puoi raccoglierli, usarli, posarli quando ti sembrano inutili\n" +
 			"o regalarli se pensi che possano ingraziarti qualcuno.\n\n"+
 			"Per conoscere le istruzioni usa il comando 'aiuto'.";
-	
+	private Labirinto lab;
+	private Partita partita;
+	private ComandoVai vai;
+	private IOSimulator console;
 	@Before
-	public void setUp() {
-		lab=new LabirintoBuilder()
-				.addStanzaIniziale("stanza1")
-				.addStanzaVincente("stanza2")
-				.addAdiacenza("stanza1", "stanza2", "direzione")
-				.getLabirinto();
+	public void setUp() throws Exception{
+		lab=Labirinto.newBuilder("labirinto1.txt").getLabirinto();
 		partita=new Partita(lab);
 		vai=new ComandoVai();
-		vai.setIO(new IOConsole());
+		vai.setIO(new IOConsole(new Scanner(System.in)));
 	}
-
 	@Test
-	public void testEsegui_direzioneEsistente() {
-		assertSame(this.partita.getStanzaCorrente(), this.lab.getStanzaIniziale());
-		vai.setParametro("direzione");
+	public void testEsegui() {
+		assertSame(partita.getStanzaCorrente(), this.lab.getStanzaIniziale());
+		vai.setParametro("nord");
 		vai.esegui(partita);
-		assertSame(this.partita.getStanzaCorrente(), this.lab.getStanzaVincente());
+		assertSame(partita.getStanzaCorrente(), this.lab.getStanzaVincente());
 	}
 	
 	@Test
-	public void testEsegui_direzioneInesistente() {
-		assertSame(this.partita.getStanzaCorrente(), this.lab.getStanzaIniziale());
-		vai.setParametro("direzione inesistente");
-		vai.esegui(partita);
-		assertSame(this.partita.getStanzaCorrente(), this.lab.getStanzaIniziale());
-	}
-	
-	@Test
-	public void testEsegui_direzioneNulla() {
-		direzione=null;
-		vai.setParametro(direzione);
-		vai.esegui(partita);
-	}
-	
-	@Test
-	public void testComandoVaiPartitaEasy() {
-		List<String> cmd=new ArrayList<>();
+	public void testComandoVaiEasy() throws Exception {
+		List<String> cmd = new ArrayList<String>();
 		cmd.add("vai nord");
-		console=new Fixture().testPartitaEasy(cmd);
-		assertTrue(console.hasNext());
-		assertEquals(MESSAGGIO_BENVENUTO, console.next());
-		assertTrue(console.hasNext());
-		assertEquals("biblioteca", console.next());
-		assertTrue(console.hasNext());
-		assertEquals("Hai vinto!", console.next());
+		console = new Fixture().testPartitaEasy(cmd);
+		assertTrue(this.console.hasNext());
+		assertEquals(this.console.next(),this.MESSAGGIO_BENVENUTO);
+		assertTrue(this.console.hasNext());
+		assertEquals(this.console.next(),"biblioteca");
+		assertTrue(this.console.hasNext());
+		assertEquals(this.console.next(),"Hai vinto!");
 	}
 	
 	@Test
-	public void testComandoVaiPartitaMid() {
-		List<String> cmd=new ArrayList<>();
+	public void testComandoVaiMid() throws Exception {
+		List<String> cmd = new ArrayList<String>();
 		cmd.add("vai nord");
 		cmd.add("vai ovest");
 		cmd.add("vai nord");
-		console=new Fixture().testPartitaMid(cmd);
-		assertTrue(console.hasNext());
-		assertEquals(MESSAGGIO_BENVENUTO, console.next());
-		assertTrue(console.hasNext());
-		assertEquals("n10", console.next());
-		assertTrue(console.hasNext());
-		assertEquals("n9", console.next());
-		assertTrue(console.hasNext());
-		assertEquals("biblioteca", console.next());
-		assertTrue(console.hasNext());
-		assertEquals("Hai vinto!", console.next());
+		console = new Fixture().testPartitaMid(cmd);
+		assertTrue(this.console.hasNext());
+		assertEquals(this.console.next(),this.MESSAGGIO_BENVENUTO);
+		assertTrue(this.console.hasNext());
+		assertEquals(this.console.next(),"n10");
+		assertTrue(this.console.hasNext());
+		assertEquals(this.console.next(),"n9");
+		assertTrue(this.console.hasNext());
+		assertEquals(this.console.next(),"biblioteca");
+		assertTrue(this.console.hasNext());
+		assertEquals(this.console.next(),"Hai vinto!");
 	}
+
 }

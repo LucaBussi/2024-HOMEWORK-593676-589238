@@ -7,17 +7,17 @@ import org.junit.Test;
 
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.ambienti.Stanza;
 
 public class PartitaTest {
 	private Partita partita;
 	
 	@Before
-	public void setUp() {
-		Labirinto lab=new LabirintoBuilder()
-				.addStanzaIniziale("stanza")
-				.getLabirinto();
+	public void setUp() throws Exception {
+		Labirinto lab=Labirinto.newBuilder("labirinto3.txt").getLabirinto();
+//		Labirinto lab=new LabirintoBuilder()
+//				.addStanzaIniziale("stanza")
+//				.getLabirinto();
 		partita=new Partita(lab);
 	}
 	

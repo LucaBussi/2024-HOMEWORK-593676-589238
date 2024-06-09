@@ -4,17 +4,15 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.junit.Test;
 import org.junit.Before;
 
-
-import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.IOSimulator;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.comandi.ComandoPrendi;
@@ -39,14 +37,12 @@ public class ComandoPrendiTest {
 			"Per conoscere le istruzioni usa il comando 'aiuto'.";
 
 	@Before
-	public void setUp() {
-		Labirinto lab=new LabirintoBuilder()
-				.addStanzaIniziale("stanza")
-				.getLabirinto();
-		partita=new Partita(lab);
+	public void setUp() throws Exception {
+		Labirinto labirinto=Labirinto.newBuilder("labirinto1.txt").getLabirinto();
+		partita=new Partita(labirinto);
 		prendi=new ComandoPrendi();
 		attrezzo=new Attrezzo("attrezzo", 5);
-		prendi.setIO(new IOConsole());
+		prendi.setIO(new IOConsole(new Scanner(System.in)));
 		stanza=this.partita.getStanzaCorrente();
 		borsa=this.partita.getGiocatore().getBorsa();
 	}
@@ -70,7 +66,7 @@ public class ComandoPrendiTest {
 	}
 
 	@Test
-	public void testComandoPrendiEasy() {
+	public void testComandoPrendiEasy() throws Exception {
 		List<String> cmd=new ArrayList<>();
 		cmd.add("prendi spada");
 		cmd.add("vai nord");
@@ -84,20 +80,6 @@ public class ComandoPrendiTest {
 		assertTrue(console.hasNext());
 		assertEquals("Hai vinto!", console.next());
 	}
-	@Test
-	public void testEseguiEasy() {
-		List<String> cmd = new ArrayList<String>();
-		cmd.add("prendi spada");
-		cmd.add("vai nord");
-		console = new Fixture().testPartitaEasy(cmd);
-		assertTrue(this.console.hasNext());
-		assertEquals(this.console.next(),this.MESSAGGIO_BENVENUTO);
-		assertTrue(this.console.hasNext());
-		assertEquals(this.console.next(),"Hai raccolto spada (3kg)!");
-		assertTrue(this.console.hasNext());
-		assertEquals(this.console.next(),"biblioteca");
-		assertTrue(this.console.hasNext());
-		assertEquals(this.console.next(),"Hai vinto!");
-	}
+	
 }
 

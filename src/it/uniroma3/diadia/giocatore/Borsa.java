@@ -9,23 +9,26 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import it.uniroma3.diadia.Configuratore;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.attrezzi.ComparatoreAttrezziPerNome;
 import it.uniroma3.diadia.attrezzi.ComparatoreAttrezziPerPeso;
 
 
 public class Borsa {
-	public final static int DEFAULT_PESO_MAX_BORSA = 10;
+	public final static int DEFAULT_PESO_MAX_BORSA = Configuratore.getPesoMax();
 	private Map<String, Attrezzo> attrezzi;
 	private int pesoMax;
 	
 	public Borsa() {
 		this(DEFAULT_PESO_MAX_BORSA);
 	}
+	
 	public Borsa(int pesoMax) {
 		this.pesoMax = pesoMax;
 		this.attrezzi = new HashMap<>();
 	}
+	
 	public boolean addAttrezzo(Attrezzo attrezzo) {
 		if (this.getPeso() + attrezzo.getPeso() > this.getPesoMax())
 			return false;
