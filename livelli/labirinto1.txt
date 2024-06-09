@@ -1,0 +1,11 @@
+Stanze:stanza,fine
+Magica:
+Buia:
+Bloccata:
+Inizio:stanza
+Vincente:fine
+Mago:
+Cane:
+Strega:
+Attrezzi:
+Uscite:stanza nord fine
